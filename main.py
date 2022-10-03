@@ -1,13 +1,24 @@
 from bs4 import BeautifulSoup
 import requests
+import re
 
-url = "https://www.newegg.ca/gigabyte-geforce-rtx-3080-ti-gv-n308tgaming-oc-12gd/p/N82E16814932436?Description=3080&cm_re=3080-_-14-932-436-_-Product"
+url = "https://coinmarketcap.com/"
 web = requests.get(url)
 doc = BeautifulSoup(web.text, "html.parser")
 # print(doc.prettify())
-prices = doc.find_all(text="$")
-parent = prices[0].parent.find("strong")
-print(parent.text)
+table = doc.tbody
+trs = table.contents
+prices = {}
+for tr in trs[:10]:
+    name,price = tr.contents[2:4]
+    coin_name = name.p.string
+    coin_price = price.a.string
+    prices[coin_name]=coin_price
+
+print(prices)
+
+
+
 
 
 
