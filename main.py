@@ -14,6 +14,11 @@ for tr in trs[:10]:
     coin_name = name.p.string
     coin_price = price.a.string
     prices[coin_name]=coin_price
+for tr in trs[10:]:
+    name,price = tr.contents[2:4]
+    coin_name = name.find_all("span")[1].string
+    coin_price = price.span.text
+    prices[coin_name]=coin_price
 
 print(prices)
 
